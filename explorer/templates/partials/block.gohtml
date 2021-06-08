@@ -1,0 +1,12 @@
+{{define "block"}}
+    <section>
+        <ul>
+            <li>DATA : {{.Data}}</li>
+            <li>HASH : {{.Hash}}</li>
+            {{if .PrevHash}}
+                <li>PREVHASH : {{.PrevHash}}</li>
+            {{end}}
+        <ul>
+    </section> 
+    <hr />
+{{end}}
