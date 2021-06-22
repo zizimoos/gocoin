@@ -16,6 +16,10 @@ type URLDescription struct {
 	Payload     string `json:"payload,omitempty"`
 }
 
+func (u URLDescription) String() string {
+	return "Hello I am the URL Description"
+}
+
 func documentation(rw http.ResponseWriter, r *http.Request) {
 	data := []URLDescription{
 		{
@@ -24,7 +28,7 @@ func documentation(rw http.ResponseWriter, r *http.Request) {
 			Description: "See Documentation",
 		},
 		{
-			URL:         "/blocks",
+			URL:         "http://localhost:4000/blocks",
 			Method:      "POST",
 			Description: "Add A Block",
 			Payload:     "data:string",
