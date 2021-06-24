@@ -19,6 +19,10 @@ func (b *Block) persist() {
 	db.SaveBlock(b.Hash, utils.ToBytes(b))
 }
 
+func FindBlock(hash string) *Block {
+	blockBytes := db.Block(hash)
+}
+
 func createBlock(data string, prevHash string, height int) *Block {
 	block := Block{
 		Data:     data,
