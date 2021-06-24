@@ -47,6 +47,6 @@ func Blockchain() *blockchain {
 			}
 		})
 	}
-	fmt.Printf("NewestHash: %s \nHeight: %d", b.NewestHash, b.Height)
+	fmt.Printf("NewestHash: %s \nHeight: %d\n", b.NewestHash, b.Height)
 	return b
 }
