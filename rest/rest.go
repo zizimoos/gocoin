@@ -47,6 +47,11 @@ func documentation(rw http.ResponseWriter, r *http.Request) {
 			Description: "See Documentation",
 		},
 		{
+			URL:         url("/status"),
+			Method:      "GET",
+			Description: "See the status of the Blockchain",
+		},
+		{
 			URL:         url("/blocks"),
 			Method:      "GET",
 			Description: "See All Blocks",
@@ -58,7 +63,7 @@ func documentation(rw http.ResponseWriter, r *http.Request) {
 			Payload:     "data:string",
 		},
 		{
-			URL:         url("/blocks/{height}"),
+			URL:         url("/blocks/{hash}"),
 			Method:      "GET",
 			Description: "See A Block",
 		},
@@ -73,14 +78,13 @@ func documentation(rw http.ResponseWriter, r *http.Request) {
 func blocks(rw http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case "GET":
-		// rw.Header().Add("Content-Type", "application/json")
-		json.NewEncoder(rw).Encode(blockchain.GetBlockchain().AllBlocks())
+		json.NewEncoder(rw).Encode(blockchain.Blockchain().Blocks())
 	case "POST":
 		var addBlockBody addBlockBody
-		fmt.Println(addBlockBody)
+		// fmt.Println(addBlockBody)
 		utils.HandleErr(json.NewDecoder(r.Body).Decode(&addBlockBody))
-		fmt.Println(addBlockBody)
-		blockchain.GetBlockchain().AddBlock(addBlockBody.Message)
+		// fmt.Println(addBlockBody)
+		blockchain.Blockchain().AddBlock(addBlockBody.Message)
 		rw.WriteHeader(http.StatusCreated)
 	}
 }
@@ -88,14 +92,13 @@ func blocks(rw http.ResponseWriter, r *http.Request) {
 func block(rw http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	hash := vars["hash"]
-	utils.HandleErr(err)
 	block, err := blockchain.FindBlock(hash)
 	encoder := json.NewEncoder(rw)
 	if err == blockchain.ErrNotFound {
 		encoder.Encode(errorResponse{fmt.Sprint(err)})
 	} else {
 		encoder.Encode(block)
-		fmt.Println(id)
+		fmt.Println(hash)
 	}
 }
 
@@ -106,11 +109,16 @@ func jsonContentTypeMiddleware(next http.Handler) http.Handler {
 	})
 }
 
+func status(rw http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(rw).Encode(blockchain.Blockchain())
+}
+
 func Start(aPort int) {
 	port = fmt.Sprintf(":%d", aPort)
 	router := mux.NewRouter()
 	router.Use(jsonContentTypeMiddleware)
 	router.HandleFunc("/", documentation).Methods("GET")
+	router.HandleFunc("/status", status)
 	router.HandleFunc("/blocks", blocks).Methods("GET", "POST")
 	router.HandleFunc("/blocks/{hash:[a-f0-9]+}", block).Methods("GET")
 	fmt.Printf("Listening on http://localhost%s\n", port)

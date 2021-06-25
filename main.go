@@ -1,10 +1,15 @@
 package main
 
-import "github.com/zizimoos/gocoin/blockchain"
+import (
+	"github.com/zizimoos/gocoin/cli"
+	"github.com/zizimoos/gocoin/db"
+)
 
 func main() {
+	defer db.Close()
 	// go explorer.Start(3000)
 	// rest.Start(4000)
-	// cli.Start()
-	blockchain.Blockchain()
+	// blockchain.Blockchain()
+	cli.Start()
+
 }
