@@ -1,7 +1,6 @@
 package blockchain
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/zizimoos/gocoin/db"
@@ -95,7 +94,7 @@ func Blockchain() *blockchain {
 			}
 		})
 	}
-	fmt.Printf("NewestHash: %s \nHeight: %d\n", b.NewestHash, b.Height)
-	fmt.Println(b.NewestHash)
+	// fmt.Printf("NewestHash: %s \nHeight: %d\n", b.NewestHash, b.Height)
+	// fmt.Println(b.NewestHash)
 	return b
 }
