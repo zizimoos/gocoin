@@ -6,12 +6,34 @@ http://localhost:4000/blocks
 ###
 http://localhost:4000/status
 
+
 ###
 POST http://localhost:4000/blocks
 
+###
+POST  http://localhost:4000/transactions
+
 {
-    "message":"kiss me three more ~"
+    "to":"tessa",
+    "amount":50
 }
+
+###
+http://localhost:4000/mempool
+
+###
+http://localhost:4000/balance/zizi
+
+###
+http://localhost:4000/balance/zizi?total=true
+
+###
+http://localhost:4000/balance/tessa
+
+
+###
+http://localhost:4000/balance/tessa?total=true
+
 
 ###
 http://localhost:4000/blocks/0a52af61fe94baf7e16c3274eee695011e571779da51522162388a30de6503f3
