@@ -19,6 +19,7 @@ func hasWalletFile() bool {
 func Wallet() *wallet {
 	if w == nil {
 		if hasWalletFile() {
+
 		}
 	}
 	return w
