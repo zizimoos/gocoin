@@ -6,6 +6,8 @@ http://localhost:4000/blocks
 ###
 http://localhost:4000/status
 
+###
+http://localhost:4000/wallet
 
 ###
 POST http://localhost:4000/blocks
@@ -22,10 +24,10 @@ POST  http://localhost:4000/transactions
 http://localhost:4000/mempool
 
 ###
-http://localhost:4000/balance/zizi
+http://localhost:4000/balance/aa459366354a4180c6a24e636f4779078856348be97a5e6c4763c5840c80b911f07f6fc161ae2ecbb253d1d2b6c834dcee9ac3ac317f697826e02f5c7b299f92
 
 ###
-http://localhost:4000/balance/zizi?total=true
+http://localhost:4000/balance/aa459366354a4180c6a24e636f4779078856348be97a5e6c4763c5840c80b911f07f6fc161ae2ecbb253d1d2b6c834dcee9ac3ac317f697826e02f5c7b299f92?total=true
 
 ###
 http://localhost:4000/balance/tessa

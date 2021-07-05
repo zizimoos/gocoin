@@ -50,6 +50,23 @@ func Blocks(b *blockchain) []*Block {
 	return blocks
 }
 
+func Txs(b *blockchain) []*Tx {
+	var txs []*Tx
+	for _, block := range Blocks(b) {
+		txs = append(txs, block.Transactions...)
+	}
+	return txs
+}
+
+func FindTx(b *blockchain, txID string) *Tx {
+	for _, tx := range Txs(b) {
+		if tx.ID == txID {
+			return tx
+		}
+	}
+	return nil
+}
+
 func persistBlockChain(b *blockchain) {
 	db.SaveCheckpoint(utils.ToBytes(b))
 }
@@ -76,12 +93,18 @@ func UTxOutsByAddress(address string, b *blockchain) []*UTxOut {
 	for _, block := range Blocks(b) {
 		for _, tx := range block.Transactions {
 			for _, input := range tx.TxIns {
-				if input.Owner == address {
+				if input.Signature == "Coinbase" {
+					break
+				}
+				if input.Signature == address {
 					creatorTxs[input.TxID] = true
 				}
+				// if FindTx(b, input.TxID).TxOuts[input.Index].Address == address {
+				// 	creatorTxs[input.TxID] = true
+				// }
 			}
 			for index, output := range tx.TxOuts {
-				if output.Owner == address {
+				if output.Address == address {
 					if _, ok := creatorTxs[tx.ID]; !ok {
 						uTxOut := &UTxOut{tx.ID, index, output.Amount}
 						if !isOnMempool(uTxOut) {
