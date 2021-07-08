@@ -1,8 +1,8 @@
 package db
 
 import (
-	"github.com/boltdb/bolt"
 	"github.com/zizimoos/gocoin/utils"
+	bolt "go.etcd.io/bbolt"
 )
 
 var db *bolt.DB
