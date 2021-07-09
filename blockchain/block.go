@@ -19,7 +19,7 @@ type Block struct {
 	Transactions []*Tx  `json:"transactions"`
 }
 
-func (b *Block) persist() {
+func persistBlock(b *Block) {
 	db.SaveBlock(b.Hash, utils.ToBytes(b))
 }
 
@@ -55,7 +55,7 @@ func (b *Block) mine() {
 }
 
 func createBlock(prevHash string, height, diff int) *Block {
-	block := Block{
+	block := &Block{
 		Hash:       "",
 		PrevHash:   prevHash,
 		Height:     height,
@@ -67,7 +67,7 @@ func createBlock(prevHash string, height, diff int) *Block {
 	// payload := block.Data + block.PrevHash + fmt.Sprint(block.Height)
 	// block.Hash = fmt.Sprintf("%x", sha256.Sum256([]byte(payload)))
 	block.mine()
-	block.Transactions = Mempool.TxToConfirm()
-	block.persist()
-	return &block
+	block.Transactions = Mempool().TxToConfirm()
+	persistBlock(block)
+	return block
 }
