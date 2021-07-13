@@ -11,9 +11,11 @@ import (
 	"strings"
 )
 
+var logFn = log.Panic
+
 func HandleErr(err error) {
 	if err != nil {
-		log.Panic(err)
+		logFn(err)
 	}
 }
 
@@ -39,7 +41,7 @@ func Hash(i interface{}) string {
 
 func Splitter(s string, sep string, i int) string {
 	r := strings.Split(s, sep)
-	if len(r)-1 < 1 {
+	if len(r)-1 < i {
 		return ""
 	}
 	return r[i]
